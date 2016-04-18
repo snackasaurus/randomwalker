@@ -1,5 +1,8 @@
 #!/usr/bin/env python
 
+from std_msgs import String
+import rospy
+
 """
 ### Steps for this file:
 
@@ -23,20 +26,23 @@ def main():
     robot, by publishing to this topic.
     """
     # TODO: Make this into a ROS node called 'teleop' using init_node.
+    rospy.init_node('teleop')
+
     # TODO: Create a publisher for the 'move_command' topic, of type
     # std_msgs/String. Don't forget to import the String message class.
-    cmd_publisher = None
+    cmd_publisher = rospy.Publisher('move_command', String)
     while True:
         try:
             cmd = raw_input('Movement command ("up", "down", "left", or "right"): ')
             if cmd != 'up' and cmd != 'down' and cmd != 'left' and cmd != 'right':
                 continue
             # TODO: Publish cmd onto the 'move_command' topic.
+            cmd_publisher.publish(cmd)
         except EOFError: # Exit the program on Ctrl-D.
             print
             return
 
     # TODO: Do you need to call rospy.spin()?
-
+    # no
 if __name__ == '__main__':
     main()
